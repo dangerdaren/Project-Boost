@@ -7,6 +7,10 @@ using UnityEngine.SceneManagement;
 
 public class Rocket : MonoBehaviour
 {
+    [SerializeField] GameObject healthyRocket;
+    [SerializeField] GameObject blownUpRocket;
+    public GameObject[] bits;
+
     [SerializeField] private int currentLevel;
 
     [SerializeField] private float rcsThrust = 75f;
@@ -82,7 +86,19 @@ public class Rocket : MonoBehaviour
         state = State.Dying;
         audioSource.PlayOneShot(death);
         deathParticles.Play();
+        MakeRocketExplode();
         Invoke("ReloadLevel", levelLoadDelay);
+    }
+
+    private void MakeRocketExplode()
+    {
+        blownUpRocket.SetActive(true);
+        healthyRocket.SetActive(false);
+        foreach (GameObject go in bits)
+        {
+            go.GetComponent<Rigidbody>().AddExplosionForce(mainThrust, transform.position, 50);
+        }
+
     }
 
     private void ReloadLevel()
