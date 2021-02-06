@@ -623,6 +623,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1766283466765276312, guid: 12e3df263817e411d82cbe1913054c6f,
+        type: 3}
+      propertyPath: field of view
+      value: 27.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1766283466765276312, guid: 12e3df263817e411d82cbe1913054c6f,
+        type: 3}
+      propertyPath: m_projectionMatrixMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1766283466765276314, guid: 12e3df263817e411d82cbe1913054c6f,
         type: 3}
       propertyPath: m_Name
@@ -641,12 +651,12 @@ PrefabInstance:
     - target: {fileID: 1766283466765276319, guid: 12e3df263817e411d82cbe1913054c6f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 12.2
+      value: 15.2
       objectReference: {fileID: 0}
     - target: {fileID: 1766283466765276319, guid: 12e3df263817e411d82cbe1913054c6f,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -25.86137
+      value: -59.3
       objectReference: {fileID: 0}
     - target: {fileID: 1766283466765276319, guid: 12e3df263817e411d82cbe1913054c6f,
         type: 3}
