@@ -28,6 +28,8 @@ public class Rocket : MonoBehaviour
     Rigidbody rigidBody;
     AudioSource audioSource;
 
+    private bool collisionsDisabled = false;
+
 
     enum State { Alive, Dying, Transcending };
     State state = State.Alive;
@@ -48,12 +50,33 @@ public class Rocket : MonoBehaviour
         {
             RespondToThrustInput();
             RespondToRotateInput();
+
+            if (Debug.isDebugBuild == true)
+            {
+                CheckDebugKeys();
+            }
+        }
+    }
+
+    private void CheckDebugKeys()
+    {
+        // Check for Next Level Debug Pressed
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            currentLevel += 1;
+            LoadNextLevel();
+        }
+        // Check for Collisions Off Debug Active
+        else if (Input.GetKeyDown(KeyCode.C))
+        {
+            // Toggle state (clever!)
+            collisionsDisabled = !collisionsDisabled;
         }
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        if (state != State.Alive) { return; } // ignore collisions when dead
+        if (state != State.Alive || collisionsDisabled == true) { return; } // ignore collisions when dead
 
         audioSource.Stop();
         mainEngineParticles.Stop();
@@ -74,7 +97,6 @@ public class Rocket : MonoBehaviour
 
     private void StartSuccessSequence()
     {
-        currentLevel += 1;
         state = State.Transcending;
         audioSource.PlayOneShot(success);
         successParticles.Play();
