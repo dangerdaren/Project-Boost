@@ -11,8 +11,6 @@ public class Rocket : MonoBehaviour
     [SerializeField] GameObject blownUpRocket;
     public GameObject[] bits;
 
-    [SerializeField] private int currentLevel;
-
     [SerializeField] private float rcsThrust = 75f;
     [SerializeField] private float mainThrust = 50f;
     [SerializeField] private float levelLoadDelay = 2.5f;
@@ -28,7 +26,10 @@ public class Rocket : MonoBehaviour
     Rigidbody rigidBody;
     AudioSource audioSource;
 
-    private bool collisionsDisabled = false;
+    [SerializeField] private int currentLevel;
+    [SerializeField] private int totalLevels;
+
+    [SerializeField] private bool collisionsDisabled = false;
 
 
     enum State { Alive, Dying, Transcending };
@@ -38,7 +39,9 @@ public class Rocket : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        totalLevels = SceneManager.sceneCountInBuildSettings;
         currentLevel = SceneManager.GetActiveScene().buildIndex;
+
         rigidBody = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
     }
@@ -100,6 +103,7 @@ public class Rocket : MonoBehaviour
         state = State.Transcending;
         audioSource.PlayOneShot(success);
         successParticles.Play();
+        currentLevel += 1;
         Invoke("LoadNextLevel", levelLoadDelay);
     }
 
@@ -132,6 +136,12 @@ public class Rocket : MonoBehaviour
     private void LoadNextLevel()
     {
         successParticles.Stop();
+
+        if (currentLevel == totalLevels)
+        {
+            currentLevel = 0;
+        }
+
         SceneManager.LoadScene(currentLevel);
     }
 
